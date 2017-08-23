@@ -5,7 +5,7 @@ resize_method = Image.ANTIALIAS
     #Image.BILINEAR) # linear interpolation in a 2x2 environment
     #Image.BICUBIC) # cubic spline interpolation in a 4x4 environment
     # Image.ANTIALIAS) # best down-sizing filter
-directory = '/home/rinzler/Documents/MemeNotMeme/Data/Validation/memes'
+directory = '/home/rinzler/Documents/MemeNotMeme/test'
 
 count = 1
 i = 1
@@ -19,7 +19,7 @@ for file_name in os.listdir(directory):
   x,y = image.size
   new_dimensions = (150, 150)
   output = image.resize(new_dimensions, Image.ANTIALIAS)
-  new_name = "meme_{}.jpg".format(i)
+  new_name = "test_img_{}.jpg".format(i)
   i+=1
   print("Current file = ",file_name)
   output_file_name = os.path.join(directory,new_name)
