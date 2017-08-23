@@ -1,6 +1,7 @@
 #Importing the files
 import os
 import numpy as np
+import keras
 from keras.models import Sequential
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator, img_to_array, load_img
@@ -55,7 +56,7 @@ model.compile(loss='binary_crossentropy',
              metrics=['accuracy'])
 
 #TRAINING
-nb_epochs = 5
+nb_epochs = 30
 nb_train_samples = 1600
 nb_validation_samples = 800
 model.fit_generator(train_generator,
@@ -67,34 +68,46 @@ model.save_weights('models/memecnn.h5')
 
 model.evaluate_generator(validation_generator, nb_validation_samples)
 
-print("img 1 = meme")
+
+def classPrinter(val,acc):
+    data = val.flatten().tolist()
+    cl = data[0]
+    acr = acc.flatten().tolist()
+    acr = acr[0]
+    acr = float("{0:.4f}".format(acr))
+    if(cl == 0):
+        print("Class = meme, Accuracy = {}".format(1.0-acr))
+    else:
+        print("Class = Not a meme, Accuracy = {}".format(acr))
+
 img = load_img('test/test_img_1.jpg')
 img = img_to_array(img)
-img = img.reshape((1,)+img.shape)
+img = img.reshape(1,150,150,3)
 img = img * (1. / 255)
-prediction = model.predict(img)
-print(prediction)
+prediction = model.predict(img, batch_size = 32, verbose = 0)
+img_class_predc = model.predict_classes(img)
+classPrinter(img_class_predc, prediction)
 
-print("img 2 = notmeme")
 img = load_img('test/test_img_2.jpg')
 img = img_to_array(img)
-img = img.reshape((1,)+img.shape)
+img = img.reshape(1,150,150,3)
 img = img * (1. / 255)
-prediction = model.predict(img)
-print(prediction)
+prediction = model.predict(img, batch_size = 32, verbose = 0)
+img_class_predc = model.predict_classes(img)
+classPrinter(img_class_predc, prediction)
 
-print("img 3 =  meme ")
 img = load_img('test/test_img_3.jpg')
 img = img_to_array(img)
-img = img.reshape((1,)+img.shape)
+img = img.reshape(1,150,150,3)
 img = img * (1. / 255)
-prediction = model.predict(img)
-print(prediction)
+prediction = model.predict(img, batch_size = 32, verbose = 0)
+img_class_predc = model.predict_classes(img)
+classPrinter(img_class_predc, prediction)
 
-print("img 4 =  meme ")
 img = load_img('test/test_img_4.jpg')
 img = img_to_array(img)
-img = img.reshape((1,)+img.shape)
+img = img.reshape(1,150,150,3)
 img = img * (1. / 255)
-prediction = model.predict(img)
-print(prediction)
+prediction = model.predict(img, batch_size = 32, verbose = 0)
+img_class_predc = model.predict_classes(img)
+classPrinter(img_class_predc, prediction)
